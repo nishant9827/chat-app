@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios';
 import Logout from './Logout';
 import ChatInput from './ChatInput';
+import {recieveMessageRoute,sendMessageRoute} from '../utils/ApiRoutes';
 import{v4 as uuidv4} from 'uuid';
 const ChatContainer = ({currentChat,currentUser,socket}) => {
   const [messages,setMessages] = useState([]);
@@ -11,7 +12,7 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
   useEffect(()=>{
     const fetchData = async()=>{
       if(currentChat){
-        const response = await axios.post('https://chat-app-api-9yr1.vercel.app/getmsg',{
+        const response = await axios.post(`${recieveMessageRoute}`,{
           from:currentUser._id,
           to:currentChat._id,
         })
@@ -23,7 +24,7 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
 
   
   const handleSendMsg = async(msg)=>{
-    await axios.post('https://chat-app-api-9yr1.vercel.app/addmsg',{
+    await axios.post(`${sendMessageRoute}`,{
       from:currentUser._id,
       to:currentChat._id,
       message:msg

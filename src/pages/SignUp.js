@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {useNavigate,Link} from 'react-router-dom'
 import {toast } from 'react-toastify';
 import '../css/login.css';
+import {registerRoute} from '../utils/ApiRoutes';
 
 const SignUp = () => {
  
@@ -36,7 +37,7 @@ const submitData = async (e)=>{
       toast.error('Password and confirm password not match')
   }else{
      try {
-    const data = await fetch('https://chat-app-api-9yr1.vercel.app/register', {
+    const data = await fetch(`${registerRoute}`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

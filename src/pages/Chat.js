@@ -6,6 +6,7 @@ import axios from 'axios';
 import Contacts from './Contacts';
 import Welcome from './Welcome';
 import ChatContainer from './ChatContainer';
+import {allUsersRoute,host} from '../utils/ApiRoutes';
 
 const Chat = () => {
   const socket = useRef();
@@ -31,7 +32,7 @@ const Chat = () => {
     try {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
-          const { data } = await axios.get(`https://chat-app-api-9yr1.vercel.app/allUsers/${currentUser._id}`);
+          const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`);
           setContacts(data);
         } else {
           navigate('/setAvatar');
@@ -43,7 +44,7 @@ const Chat = () => {
   };
   useEffect(()=>{
     if(currentUser){
-      socket.current = io('https://chat-app-api-9yr1.vercel.app');
+      socket.current = io(`${host}`);
       socket.current.emit("add-user",currentUser._id);
     }
   },[currentUser]);

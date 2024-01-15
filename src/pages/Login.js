@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import {loginRoute} from '../utils/ApiRoutes';
 import '../css/login.css';
 
 const Login = () => {
@@ -33,7 +34,7 @@ const submitData = async (e)=>{
   }
   else{
      try {
-    const data = await fetch('https://chat-app-api-9yr1.vercel.app/login', {
+    const data = await fetch(`${loginRoute}`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
