@@ -1,0 +1,93 @@
+body{
+  background-color: #131324;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+.loginBox{
+    width: 500px;
+    padding: 20px;
+    margin: auto;
+    box-shadow: #302a41 0px 7px 29px 0px;
+    border-radius:20px;
+    background-color: #00000076;
+  }
+  .loginHeading{
+    font-size: 25px;
+    display: block;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #fff;
+    color: #fff;
+  }
+  .formGroup {
+      position: relative;
+      margin-bottom: 20px;
+      margin:20px 0px 10px 0px;
+    }
+    
+    .formElement {
+      padding: 20px 10px 6px 10px;
+      border-radius: 2px;
+      border: 1px solid lightgray;
+      width: 100%;
+      font-size: 14px;
+      outline:none;
+      font-weight: 500;
+      background-color: transparent;
+      color: #fff;
+    }
+    
+    .floatingLabel {
+      position: absolute;
+      left: 20px;
+      top: 11px;
+      transition: 0.3s;
+      pointer-events: none;
+      color: #ffffffcc;
+    }
+    
+    .formElement:focus + .floatingLabel,
+    .formElement:valid + .floatingLabel {
+      left:10px;
+      top: 5px;
+      transform: translateY(0);
+      font-size: 11px; /* Adjust font size as needed */
+      color: #ffffffcc;
+    }
+    
+    .formElement:focus {
+      border-color: #997af0;
+    }
+    .submitButton{
+      background-color: #997af0;
+      color: #fff;
+      padding: .5rem 2rem;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0.4rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      transition: 0.5s ease-in-out;
+    }
+    .submitButton:hover{
+      opacity: .7;
+    }
+    .already_span{
+      display:block;
+      margin-top:10px;
+      text-transform: uppercase;
+      text-align: right;
+      font-size: 14px;
+      color:#fff;
+    }
+    .already_span a{
+      text-transform: uppercase;
+      margin-left:4px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 14px;
+      color:#997af0;
+    }
