@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import loader from '../assets/loader.gif';
 import axios from 'axios';
+import {setAvatarRoute} from '../utils/ApiRoutes';
 
 import styled from 'styled-components';
 
@@ -24,7 +25,7 @@ const SetAvatar = () => {
             toast.error("Please select an avatar ");
         }else{
             const user = await JSON.parse(localStorage.getItem('userData'));
-            const {data}= await axios.post(`https://chat-app-api-9yr1.vercel.app/setAvatar/${user._id}`,{
+            const {data}= await axios.post(`${setAvatarRoute}/${user._id}`,{
                 image:avatars[selectedAvatar]
             });
             if(data.isSet === true){
