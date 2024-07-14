@@ -1,12 +1,12 @@
-import React,{useState,useEffect,useRef} from 'react';
-import { useNavigate } from 'react-router-dom';
-import {io} from 'socket.io-client';
-import styled from 'styled-components';
-import axios from 'axios';
-import Contacts from './Contacts';
-import Welcome from './Welcome';
-import ChatContainer from './ChatContainer';
-import {allUsersRoute,host} from '../utils/ApiRoutes';
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+import styled from "styled-components";
+import axios from "axios";
+import Contacts from "./Contacts";
+import Welcome from "./Welcome";
+import ChatContainer from "./ChatContainer";
+import { allUsersRoute, host } from "../utils/ApiRoutes";
 
 const Chat = () => {
   const socket = useRef();
@@ -17,43 +17,45 @@ const Chat = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const fetchData = async () => {
     try {
-      if (!localStorage.getItem('userData')) {
-        navigate('/login');
+      if (!localStorage.getItem("userData")) {
+        navigate("/login");
       } else {
-        const userData = await JSON.parse(localStorage.getItem('userData'));
+        const userData = await JSON.parse(localStorage.getItem("userData"));
         setCurrentUser(userData);
-        setIsLoaded(true)
+        setIsLoaded(true);
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data:", error);
     }
   };
   const fetchContacts = async () => {
     try {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
-          const { data } = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+          const { data } = await axios.get(
+            `${allUsersRoute}/${currentUser._id}`
+          );
           setContacts(data);
         } else {
-          navigate('/setAvatar');
+          navigate("/setAvatar");
         }
       }
     } catch (error) {
-      console.error('Error fetching contacts:', error);
+      console.error("Error fetching contacts:", error);
     }
   };
-  useEffect(()=>{
-    if(currentUser){
+  useEffect(() => {
+    if (currentUser) {
       socket.current = io(`${host}`);
-      socket.current.emit("add-user",currentUser._id);
+      socket.current.emit("add-user", currentUser._id);
     }
-  },[currentUser]);
-  useEffect(()=>{
+  }, [currentUser]);
+  useEffect(() => {
     fetchData();
-  },[])
-  useEffect(()=>{
+  }, []);
+  useEffect(() => {
     fetchContacts();
-  },[currentUser])
+  }, [currentUser]);
   // console.log(currentUser);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
@@ -62,12 +64,21 @@ const Chat = () => {
   return (
     <Container>
       <div className="container">
-        <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
-        {isLoaded && currentChat === undefined? (
+        <Contacts
+          contacts={contacts}
+          currentUser={currentUser}
+          changeChat={handleChatChange}
+        />
+        {isLoaded && currentChat === undefined ? (
           <Welcome currentUser={currentUser} />
         ) : (
-          currentUser &&
-          <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket}/>
+          currentUser && (
+            <ChatContainer
+              currentChat={currentChat}
+              currentUser={currentUser}
+              socket={socket}
+            />
+          )
         )}
       </div>
     </Container>
@@ -75,24 +86,24 @@ const Chat = () => {
 };
 
 const Container = styled.div`
-  box-sizing:border-box;
-  height:100vh;
-  width:100vw;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:1rem;
-  align-items:center;
-  background-color:#131324;
-  .container{
-    height:85vh;
-    width:85%;
-    background-color:#00000076;
-    display:grid;
-    grid-template-columns:25% 75%;
-    padding:0;
-    @media screen and (min-width:720px) and (max-width:1080px){
-      grid-template-columns:35% 65%; 
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  background-color: #131324;
+  .container {
+    height: 85vh;
+    width: 85%;
+    background-color: #00000076;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    padding: 0;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {
+      grid-template-columns: 35% 65%;
     }
   }
 `;
